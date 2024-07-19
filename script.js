@@ -235,18 +235,18 @@ window.onclick = function(event) {
     }
 }
 
-// Add a skybox with a texture
 const textureLoader = new THREE.TextureLoader();
 const createSkybox = (texturePath) => {
-    const geometry = new THREE.SphereGeometry(1000, 60, 40);
-    const texture = textureLoader.load(texturePath);
-    const material = new THREE.MeshBasicMaterial({
-        map: texture,
-        side: THREE.BackSide // Make the material visible from inside the sphere
+    const texture = textureLoader.load(texturePath, () => {
+        const geometry = new THREE.SphereGeometry(1000, 60, 40);
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        const material = new THREE.MeshBasicMaterial({
+            map: texture,
+            side: THREE.BackSide // Make the material visible from inside the sphere
+        });
+        const skybox = new THREE.Mesh(geometry, material);
+        scene.add(skybox);
     });
-    const skybox = new THREE.Mesh(geometry, material);
-    return skybox;
 };
 
-const skybox = createSkybox('sphere.jpg');
-scene.add(skybox);
+createSkybox('sphere.jpg');
