@@ -152,7 +152,7 @@ function createNucleus(protons, neutrons) {
 
 function createElectrons(electronConfiguration) {
     const electrons = [];
-    const electronMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00, transparent: true, opacity: 1 });
+    const electronMaterial = new THREE.MeshBasicMaterial({ color: 0xf0ff00, transparent: true, opacity: 1 });
 
     let orbitalRadii = [2, 4, 6, 8, 10, 12, 14]; // Simplified orbital radii for demo purposes
     for (let j = 0; j < electronConfiguration.length; j++) {
