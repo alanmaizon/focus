@@ -235,20 +235,17 @@ window.onclick = function(event) {
     }
 }
 
-// Add GridHelper
-const size = 100;
-const divisions = 100;
-const gridHelper = new THREE.GridHelper(size, divisions);
-scene.add(gridHelper);
+// Add a skybox with a galaxy texture
+const createSkybox = (texturePath) => {
+    const geometry = new THREE.SphereGeometry(1000, 60, 40);
+    const texture = textureLoader.load(texturePath);
+    const material = new THREE.MeshBasicMaterial({
+        map: texture,
+        side: THREE.BackSide // Make the material visible from inside the sphere
+    });
+    const skybox = new THREE.Mesh(geometry, material);
+    return skybox;
+};
 
-// Add Skybox
-const loader = new THREE.CubeTextureLoader();
-const skyboxTexture = loader.load([
-    'n.jpg', // Replace with the path to your positive X texture
-    'n.jpg', // Replace with the path to your negative X texture
-    'n.jpg', // Replace with the path to your positive Y texture
-    'n.jpg', // Replace with the path to your negative Y texture
-    'n.jpg', // Replace with the path to your positive Z texture
-    'n.jpg'  // Replace with the path to your negative Z texture
-]);
-scene.background = skyboxTexture;
+const skybox = createSkybox('n.jpg');
+scene.add(skybox);
