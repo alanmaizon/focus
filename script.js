@@ -1,6 +1,6 @@
 // Create the scene, camera, and renderer
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xffffff);
+scene.background = new THREE.Color(0x000000);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 20;
@@ -234,18 +234,3 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-
-// Add Skybox
-const createSkybox = (texturePath) => {
-    const geometry = new THREE.SphereGeometry(1000, 60, 40);
-    const texture = textureLoader.load(texturePath);
-    const material = new THREE.MeshBasicMaterial({
-        map: texture,
-        side: THREE.BackSide 
-    });
-    const skybox = new THREE.Mesh(geometry, material);
-    return skybox;
-};
-
-const skybox = createSkybox('background.jpg');
-scene.add(skybox);
