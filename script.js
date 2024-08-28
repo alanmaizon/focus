@@ -1,6 +1,6 @@
 // Create the scene, camera, and renderer
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x000000);
+scene.background = new THREE.Color(0xffffff);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 20;
@@ -152,7 +152,7 @@ function createNucleus(protons, neutrons) {
 
 function createElectrons(electronConfiguration) {
     const electrons = [];
-    const electronMaterial = new THREE.MeshBasicMaterial({ color: 0xf0ff00, transparent: true, opacity: 1 });
+    const electronMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1 });
 
     let orbitalRadii = [2, 4, 6, 8, 10, 12, 14]; // Simplified orbital radii for demo purposes
     for (let j = 0; j < electronConfiguration.length; j++) {
@@ -234,3 +234,21 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+// Add GridHelper
+const size = 100;
+const divisions = 100;
+const gridHelper = new THREE.GridHelper(size, divisions);
+scene.add(gridHelper);
+
+// Add Skybox
+const loader = new THREE.CubeTextureLoader();
+const skyboxTexture = loader.load([
+    'n.jpg', // Replace with the path to your positive X texture
+    'n.jpg', // Replace with the path to your negative X texture
+    'n.jpg', // Replace with the path to your positive Y texture
+    'n.jpg', // Replace with the path to your negative Y texture
+    'n.jpg', // Replace with the path to your positive Z texture
+    'n.jpg'  // Replace with the path to your negative Z texture
+]);
+scene.background = skyboxTexture;
