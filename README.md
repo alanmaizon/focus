@@ -1,8 +1,3 @@
-Here's an updated `README.md` for your repository, **Focus**, as well as a testing and debugging report to help document your development process.
-
-### `README.md`
-
-```markdown
 # Focus
 
 **Focus** is a web-based application that visualizes elements in 3D, providing an interactive way to learn and explore different elements. Built with Flask for backend and modern web technologies like JavaScript, HTML, and CSS for frontend.
