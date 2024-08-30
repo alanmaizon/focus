@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div id="controls">
+        <h1>Focus 3D Model Generator</h1>
+        <input type="text" id="elementInput" placeholder="Enter element symbol (e.g., U)">
+        <button type="button" onclick="generateModel()">Generate Model</button>
+    </div>
+
+    <div id="periodic-table">
+        <img src="{{ url_for('static', filename='img/periodic_table.png') }}" alt="Periodic Table">
+    </div>
+
+    <!-- Modal for 3D Model -->
+    <div id="modelModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="d-model"></div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
