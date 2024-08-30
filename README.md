@@ -25,7 +25,7 @@
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/focus.git
+    git clone https://github.com/alanmaizon/focus.git
     cd focus
     ```
 
@@ -67,12 +67,8 @@ Focus/
 │   │   └── style.css         # Stylesheet for the app
 │   ├── js/
 │   │   └── script.js         # JavaScript for frontend interactivity
-│   └── json/
-│       └── elements.json     # JSON data for elements
 ├── templates/
 │   └── index.html            # Main HTML template
-├── tests/
-│   └── test_app.py           # Unit tests for Flask app
 └── README.md                 # Project documentation
 ```
 
