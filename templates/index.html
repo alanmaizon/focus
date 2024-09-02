@@ -8,8 +8,33 @@
 </head>
 <body>
     <div id="controls">
-        <h1>Focus 3D Model Generator</h1>
-        <input type="text" id="elementInput" placeholder="Enter element symbol (e.g., U)">
+        <section id="title-section">
+        <h1>Focus</h1>
+        </section>
+        <input list="symbols" type="text" id="elementInput" placeholder="Enter element symbol (e.g., U)">
+            <!-- Datalist for elements suggestions -->
+            <datalist id="symbols">
+                <option value="H">Hydrogen</option>
+                <option value="He">Helium</option>
+                <option value="Li">Lithium</option>
+                <option value="Be">Beryllium</option>
+                <option value="B">Boron</option>
+                <option value="C">Carbon</option>
+                <option value="N">Nitrogen</option>
+                <option value="O">Oxygen</option>
+                <option value="F">Fluorine</option>
+                <option value="Ne">Neon</option>
+                <option value="Na">Sodium</option>
+                <option value="Mg">Magnesium</option>
+                <option value="Al">Aluminum</option>
+                <option value="Si">Silicon</option>
+                <option value="P">Phosphorus</option>
+                <option value="S">Sulfur</option>
+                <option value="Cl">Chlorine</option>
+                <option value="Ar">Argon</option>
+                <option value="K">Potassium</option>
+                <option value="Ca">Calcium</option>
+            </datalist>
         <button type="button" onclick="generateModel()">Generate Model</button>
     </div>
 
