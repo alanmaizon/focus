@@ -7,9 +7,28 @@ body {
     background-image: url(../img/n.jpg);
 }
 
-h1 {
+#title-section h1 {
+    font-size: 3rem;
     color: #fff;
-    font-family: 'Lucida Sans', sans-serif;
+    text-transform: uppercase;
+    filter: blur(10px);
+    transform: translateY(-75%);
+    opacity: 0;
+    animation: drop 2s forwards;
+}
+
+/* Animation Keyframes */
+@keyframes drop {
+    0% {
+        filter: blur(10px);
+        transform: translateY(-75%);
+        opacity: 0;
+    }
+    100% {
+        filter: blur(0);
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 #controls {
