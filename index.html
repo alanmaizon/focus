@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Focus - Interactive 3D Atomic Structure Visualizer. Explore chemical elements with stunning 3D models of their atomic structures.">
+    <title>Focus — 3D Atomic Visualizer</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <header id="controls">
+            <div class="header-inner">
+                <section id="title-section">
+                    <h1>Focus</h1>
+                    <p class="subtitle">3D Atomic Structure Visualizer</p>
+                </section>
+                <div class="search-group">
+                    <div class="input-wrapper">
+                        <input list="symbols" type="text" id="elementInput" placeholder="Enter element symbol (e.g., Fe)" autocomplete="off">
+                        <datalist id="symbols">
+                            <!-- Populated dynamically by script.js -->
+                        </datalist>
+                    </div>
+                    <button type="button" id="generateBtn" onclick="generateModel()">
+                        <span class="btn-icon">⚛</span> Visualize
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <div id="periodic-table">
+                <img src="static/img/periodic_table.png" alt="Periodic Table of Elements">
+            </div>
+
+            <div id="info-panel" class="hidden">
+                <div class="info-card">
+                    <div class="info-header">
+                        <span id="info-symbol" class="element-symbol"></span>
+                        <div class="info-title">
+                            <h2 id="info-name"></h2>
+                            <span id="info-number" class="atomic-number"></span>
+                        </div>
+                    </div>
+                    <div class="info-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Protons</span>
+                            <span id="info-protons" class="detail-value proton-color"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Neutrons</span>
+                            <span id="info-neutrons" class="detail-value neutron-color"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Electrons</span>
+                            <span id="info-electrons" class="detail-value electron-color"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Electron Config</span>
+                            <span id="info-config" class="detail-value"></span>
+                        </div>
+                    </div>
+                    <div class="legend">
+                        <span class="legend-item"><span class="legend-dot proton-dot"></span> Protons</span>
+                        <span class="legend-item"><span class="legend-dot neutron-dot"></span> Neutrons</span>
+                        <span class="legend-item"><span class="legend-dot electron-dot"></span> Electrons</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal for 3D Model -->
+        <div id="modelModal" class="modal">
+            <div class="modal-content">
+                <button class="close" aria-label="Close modal">&times;</button>
+                <div id="d-model"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Focus &mdash; An interactive chemistry learning tool | <a href="https://github.com/alanmaizon/focus" target="_blank" rel="noopener">GitHub</a></p>
+    </footer>
+
+    <script src="static/js/three.min.js"></script>
+    <script src="static/js/OrbitControls.js"></script>
+    <script src="static/js/script.js"></script>
+</body>
+</html>
