@@ -7,6 +7,7 @@
 ## Table of Contents
 
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Usage](#usage)
 - [Installation](#installation)
 - [Project Structure](#project-structure)
@@ -23,6 +24,12 @@
 - **Modern dark theme** with responsive design for all screen sizes
 - **Keyboard support** — press Enter to visualize after typing a symbol
 - **Zero backend required** — runs entirely in the browser as a static site
+
+## Screenshots
+
+![Periodic Table View](https://github.com/user-attachments/assets/9ff6edfd-30e2-450f-ae6b-e1879784d67b)
+
+![3D Atomic Model View](https://github.com/user-attachments/assets/9d00a272-af2b-47ac-808a-78454b24e6ce)
 
 ## Usage
 
