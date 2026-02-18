@@ -1,20 +1,50 @@
 // Create the scene, camera, and renderer
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xffffff);
+scene.background = new THREE.Color(0x111827);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 20;
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth * 0.5, window.innerHeight * 0.5);
+renderer.setPixelRatio(window.devicePixelRatio);
 
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+// Element names mapping
+const elementNames = {
+    H: "Hydrogen", He: "Helium", Li: "Lithium", Be: "Beryllium", B: "Boron",
+    C: "Carbon", N: "Nitrogen", O: "Oxygen", F: "Fluorine", Ne: "Neon",
+    Na: "Sodium", Mg: "Magnesium", Al: "Aluminum", Si: "Silicon", P: "Phosphorus",
+    S: "Sulfur", Cl: "Chlorine", Ar: "Argon", K: "Potassium", Ca: "Calcium",
+    Sc: "Scandium", Ti: "Titanium", V: "Vanadium", Cr: "Chromium", Mn: "Manganese",
+    Fe: "Iron", Co: "Cobalt", Ni: "Nickel", Cu: "Copper", Zn: "Zinc",
+    Ga: "Gallium", Ge: "Germanium", As: "Arsenic", Se: "Selenium", Br: "Bromine",
+    Kr: "Krypton", Rb: "Rubidium", Sr: "Strontium", Y: "Yttrium", Zr: "Zirconium",
+    Nb: "Niobium", Mo: "Molybdenum", Tc: "Technetium", Ru: "Ruthenium", Rh: "Rhodium",
+    Pd: "Palladium", Ag: "Silver", Cd: "Cadmium", In: "Indium", Sn: "Tin",
+    Sb: "Antimony", Te: "Tellurium", I: "Iodine", Xe: "Xenon", Cs: "Cesium",
+    Ba: "Barium", La: "Lanthanum", Ce: "Cerium", Pr: "Praseodymium", Nd: "Neodymium",
+    Pm: "Promethium", Sm: "Samarium", Eu: "Europium", Gd: "Gadolinium", Tb: "Terbium",
+    Dy: "Dysprosium", Er: "Erbium", Tm: "Thulium", Yb: "Ytterbium", Lu: "Lutetium",
+    Hf: "Hafnium", Ta: "Tantalum", W: "Tungsten", Re: "Rhenium", Os: "Osmium",
+    Ir: "Iridium", Pt: "Platinum", Au: "Gold", Hg: "Mercury", Tl: "Thallium",
+    Pb: "Lead", Bi: "Bismuth", Po: "Polonium", At: "Astatine", Rn: "Radon",
+    Fr: "Francium", Ra: "Radium", Ac: "Actinium", Th: "Thorium", Pa: "Protactinium",
+    U: "Uranium", Np: "Neptunium", Pu: "Plutonium", Am: "Americium", Cm: "Curium",
+    Bk: "Berkelium", Cf: "Californium", Es: "Einsteinium", Fm: "Fermium",
+    Md: "Mendelevium", No: "Nobelium", Lr: "Lawrencium", Rf: "Rutherfordium",
+    Db: "Dubnium", Sg: "Seaborgium", Bh: "Bohrium", Hs: "Hassium",
+    Mt: "Meitnerium", Ds: "Darmstadtium", Rg: "Roentgenium"
+};
 
 // Element data (atomic number, protons, neutrons, electron configuration)
 const elements = {
@@ -132,18 +162,34 @@ const elements = {
 
 function createNucleus(protons, neutrons) {
     const nucleus = new THREE.Group();
-    const protonMaterial = new THREE.MeshBasicMaterial({ color: 0xff0088, transparent: true, opacity: 0.8 });
-    const neutronMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.8 });
+    const protonMaterial = new THREE.MeshPhongMaterial({ color: 0xf43f5e, transparent: true, opacity: 0.85, shininess: 80 });
+    const neutronMaterial = new THREE.MeshPhongMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.85, shininess: 80 });
+    const sphereGeometry = new THREE.SphereGeometry(0.2, 24, 24);
+
+    // Use a more structured packing for the nucleus
+    var total = protons + neutrons;
+    var nucleonScale = total > 50 ? 0.8 : 1.0;
+    var spreadFactor = Math.cbrt(total) * 0.35;
 
     for (let i = 0; i < protons; i++) {
-        const proton = new THREE.Mesh(new THREE.SphereGeometry(0.2, 32, 32), protonMaterial);
-        proton.position.set((Math.random() - 0.5) * 1, (Math.random() - 0.5) * 1, (Math.random() - 0.5) * 1);
+        const proton = new THREE.Mesh(sphereGeometry, protonMaterial);
+        proton.position.set(
+            (Math.random() - 0.5) * spreadFactor * 2,
+            (Math.random() - 0.5) * spreadFactor * 2,
+            (Math.random() - 0.5) * spreadFactor * 2
+        );
+        proton.scale.setScalar(nucleonScale);
         nucleus.add(proton);
     }
 
     for (let i = 0; i < neutrons; i++) {
-        const neutron = new THREE.Mesh(new THREE.SphereGeometry(0.2, 32, 32), neutronMaterial);
-        neutron.position.set((Math.random() - 0.5) * 1, (Math.random() - 0.5) * 1, (Math.random() - 0.5) * 1);
+        const neutron = new THREE.Mesh(sphereGeometry, neutronMaterial);
+        neutron.position.set(
+            (Math.random() - 0.5) * spreadFactor * 2,
+            (Math.random() - 0.5) * spreadFactor * 2,
+            (Math.random() - 0.5) * spreadFactor * 2
+        );
+        neutron.scale.setScalar(nucleonScale);
         nucleus.add(neutron);
     }
 
@@ -152,19 +198,28 @@ function createNucleus(protons, neutrons) {
 
 function createElectrons(electronConfiguration) {
     const electrons = [];
-    const electronMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1 });
+    const electronMaterial = new THREE.MeshPhongMaterial({ color: 0xa78bfa, transparent: true, opacity: 1, emissive: 0x6366f1, emissiveIntensity: 0.3 });
+    const electronGeometry = new THREE.SphereGeometry(0.12, 16, 16);
 
-    let orbitalRadii = [2, 4, 6, 8, 10, 12, 14]; // Simplified orbital radii for demo purposes
+    const orbitalRadii = [2, 4, 6, 8, 10, 12, 14];
     for (let j = 0; j < electronConfiguration.length; j++) {
+        // Create orbital ring visualization
+        const ringGeometry = new THREE.RingGeometry(orbitalRadii[j] - 0.02, orbitalRadii[j] + 0.02, 64);
+        const ringMaterial = new THREE.MeshBasicMaterial({ color: 0x6366f1, transparent: true, opacity: 0.12, side: THREE.DoubleSide });
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring.rotation.x = Math.PI / 2 + (j * 0.3);
+        scene.add(ring);
+
         for (let i = 0; i < electronConfiguration[j]; i++) {
-            const electron = new THREE.Mesh(new THREE.SphereGeometry(0.1, 32, 32), electronMaterial);
+            const electron = new THREE.Mesh(electronGeometry, electronMaterial);
             scene.add(electron);
             electrons.push({
                 mesh: electron,
                 orbitalRadius: orbitalRadii[j],
                 orbitalIndex: i,
                 totalElectrons: electronConfiguration[j],
-                direction: j % 2 === 0 ? 1 : -1
+                direction: j % 2 === 0 ? 1 : -1,
+                tilt: j * 0.3
             });
         }
     }
@@ -180,9 +235,11 @@ function animateElectrons(electrons) {
             const radius = electron.orbitalRadius;
             const direction = electron.direction;
             const speedFactor = 10 / radius;
+            const tilt = electron.tilt || 0;
             electron.mesh.position.x = Math.cos(angle + direction * time * speedFactor) * radius;
-            electron.mesh.position.y = Math.sin(angle + direction * time * speedFactor) * radius;
-            electron.mesh.position.z = Math.sin(angle + direction * time * speedFactor * 0.5) * radius * 0.5;
+            electron.mesh.position.y = Math.sin(angle + direction * time * speedFactor) * radius * Math.cos(tilt);
+            electron.mesh.position.z = Math.sin(angle + direction * time * speedFactor) * radius * Math.sin(tilt)
+                                     + Math.sin(angle + direction * time * speedFactor * 0.5) * radius * 0.3;
         });
         controls.update();
         renderer.render(scene, camera);
@@ -191,13 +248,24 @@ function animateElectrons(electrons) {
 }
 
 function generateModel() {
-    const elementSymbol = document.getElementById('elementInput').value;
+    const elementSymbol = document.getElementById('elementInput').value.trim();
     const element = elements[elementSymbol];
 
     if (!element) {
-        alert('Element not found!');
+        alert('Element not found! Please enter a valid symbol (e.g., H, Fe, Au).');
         return;
     }
+
+    // Update info panel
+    const infoPanel = document.getElementById('info-panel');
+    infoPanel.classList.remove('hidden');
+    document.getElementById('info-symbol').textContent = elementSymbol;
+    document.getElementById('info-name').textContent = elementNames[elementSymbol] || elementSymbol;
+    document.getElementById('info-number').textContent = 'Atomic Number ' + element.atomicNumber;
+    document.getElementById('info-protons').textContent = element.protons;
+    document.getElementById('info-neutrons').textContent = element.neutrons;
+    document.getElementById('info-electrons').textContent = element.electrons.reduce(function(a, b) { return a + b; }, 0);
+    document.getElementById('info-config').textContent = element.electrons.join(' · ');
 
     // Show the modal
     const modal = document.getElementById('modelModal');
@@ -208,6 +276,16 @@ function generateModel() {
         scene.remove(scene.children[0]);
     }
 
+    // Add lighting for Phong materials
+    const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0xffffff, 1.2, 100);
+    pointLight.position.set(10, 10, 10);
+    scene.add(pointLight);
+    const pointLight2 = new THREE.PointLight(0x6366f1, 0.6, 100);
+    pointLight2.position.set(-10, -5, -10);
+    scene.add(pointLight2);
+
     // Create and add nucleus
     const nucleus = createNucleus(element.protons, element.neutrons);
     scene.add(nucleus);
@@ -215,6 +293,10 @@ function generateModel() {
     // Create and animate electrons
     const electrons = createElectrons(element.electrons);
     animateElectrons(electrons);
+
+    // Adjust camera based on element size
+    const maxShell = element.electrons.length;
+    camera.position.z = Math.max(20, maxShell * 4);
 
     // Ensure renderer is attached to the modal content
     const dModel = document.getElementById('d-model');
@@ -230,25 +312,25 @@ document.querySelector('.close').onclick = function() {
 // Close modal when the user clicks anywhere outside of the modal
 window.onclick = function(event) {
     const modal = document.getElementById('modelModal');
-    if (event.target == modal) {
+    if (event.target === modal) {
         modal.style.display = "none";
     }
 }
 
-// Add GridHelper
-const size = 100;
-const divisions = 100;
-const gridHelper = new THREE.GridHelper(size, divisions);
-scene.add(gridHelper);
+// Allow Enter key to trigger visualization
+document.getElementById('elementInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        generateModel();
+    }
+});
 
-// Add Skybox
-const loader = new THREE.CubeTextureLoader();
-const skyboxTexture = loader.load([
-    'static/img/n.jpg', // Replace with the path to your positive X texture
-    'static/img/n.jpg', // Replace with the path to your negative X texture
-    'static/img/n.jpg', // Replace with the path to your positive Y texture
-    'static/img/n.jpg', // Replace with the path to your negative Y texture
-    'static/img/n.jpg', // Replace with the path to your positive Z texture
-    'static/img/n.jpg'  // Replace with the path to your negative Z texture
-]);
-scene.background = skyboxTexture;
+// Populate datalist with all available elements
+(function populateDatalist() {
+    const datalist = document.getElementById('symbols');
+    Object.keys(elements).forEach(function(sym) {
+        var option = document.createElement('option');
+        option.value = sym;
+        option.textContent = elementNames[sym] || sym;
+        datalist.appendChild(option);
+    });
+})();
