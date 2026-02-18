@@ -34,7 +34,7 @@ const elementNames = {
     Sb: "Antimony", Te: "Tellurium", I: "Iodine", Xe: "Xenon", Cs: "Cesium",
     Ba: "Barium", La: "Lanthanum", Ce: "Cerium", Pr: "Praseodymium", Nd: "Neodymium",
     Pm: "Promethium", Sm: "Samarium", Eu: "Europium", Gd: "Gadolinium", Tb: "Terbium",
-    Dy: "Dysprosium", Er: "Erbium", Tm: "Thulium", Yb: "Ytterbium", Lu: "Lutetium",
+    Dy: "Dysprosium", Ho: "Holmium", Er: "Erbium", Tm: "Thulium", Yb: "Ytterbium", Lu: "Lutetium",
     Hf: "Hafnium", Ta: "Tantalum", W: "Tungsten", Re: "Rhenium", Os: "Osmium",
     Ir: "Iridium", Pt: "Platinum", Au: "Gold", Hg: "Mercury", Tl: "Thallium",
     Pb: "Lead", Bi: "Bismuth", Po: "Polonium", At: "Astatine", Rn: "Radon",
@@ -167,9 +167,9 @@ function createNucleus(protons, neutrons) {
     const sphereGeometry = new THREE.SphereGeometry(0.2, 24, 24);
 
     // Use a more structured packing for the nucleus
-    var total = protons + neutrons;
-    var nucleonScale = total > 50 ? 0.8 : 1.0;
-    var spreadFactor = Math.cbrt(total) * 0.35;
+    const total = protons + neutrons;
+    const nucleonScale = total > 50 ? 0.8 : 1.0;
+    const spreadFactor = Math.cbrt(total) * 0.35;
 
     for (let i = 0; i < protons; i++) {
         const proton = new THREE.Mesh(sphereGeometry, protonMaterial);
@@ -328,7 +328,7 @@ document.getElementById('elementInput').addEventListener('keydown', function(e) 
 (function populateDatalist() {
     const datalist = document.getElementById('symbols');
     Object.keys(elements).forEach(function(sym) {
-        var option = document.createElement('option');
+        const option = document.createElement('option');
         option.value = sym;
         option.textContent = elementNames[sym] || sym;
         datalist.appendChild(option);
